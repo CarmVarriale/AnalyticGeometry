@@ -22,18 +22,24 @@ classdef Frame < GeomObj & TreeNode
 	%
 	% See also: World, GeomObj, TreeNode, Vector, Orien
 
-	properties
-		uID (1,1) string = ""
-		locat (3,1) double = [0; 0; 0]
-		angles (3,1) double = [0; 0; 0]
-		seqID string {mustBeMember(seqID, ["321", "123"])} = "321"
-		ref = Frame.empty
+
+	properties	
+
+		uID (1,1) string
+		locat (3,1) double
+		angles (3,1) double
+		seqID string {mustBeMember(seqID, "321")}
+		ref Frame {mustBeScalarOrEmpty}
+	
 	end
 
 	properties (Dependent)
+	
 		origin (1,1) Point
 		orien (1,1) Orien
 		triad (3,1) Vector
+	
+	end
 	end
 
 	methods
@@ -41,23 +47,21 @@ classdef Frame < GeomObj & TreeNode
 		%% Constructor
 		function frame = Frame(uID, locat, angles, seqID, ref)
 			arguments (Input)
-				uID (1,1) string = ""
+				uID (1,1) string = "Default Frame"
 				locat (3,1) double = [0; 0; 0]
 				angles (3,1) double = [0; 0; 0]
-				seqID string {mustBeMember(seqID, ["321", "123"])} = "321"
-				ref = Frame.empty
+				seqID string {mustBeMember(seqID, "321")} = "321"
+				ref = World.getWorld()
 			end
 			arguments (Output)
 				frame Frame {mustBeScalarOrEmpty}
 			end
-			if nargin > 0
-				mustBeNonzeroLengthText(uID)
-				frame.uID = uID;				
-				frame.locat = locat;
-				frame.angles = angles;
-				frame.seqID = seqID;
-				frame.ref = ref;
-			end
+			mustBeNonzeroLengthText(uID)
+			frame.uID = uID;				
+			frame.locat = locat;
+			frame.angles = angles;
+			frame.seqID = seqID;
+			frame.ref = ref;
 		end
 
 

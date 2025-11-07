@@ -16,7 +16,9 @@ classdef Orien < Tensor
 	% See also: Tensor, DirCosMat1, DirCosMat2, DirCosMat3
 
 	properties
-		seqID string {mustBeMember(seqID, "321")} = "321"
+
+		seqID string {mustBeMember(seqID, "321")}
+
 	end
 
 	properties (Dependent)
@@ -28,14 +30,12 @@ classdef Orien < Tensor
 
 		%% Constructor
 		function orien = Orien(angles, seqID, ref)
-			arguments
-				angles (3,1) double
-				seqID string {mustBeMember(seqID, "321")}
-				ref Frame {mustBeScalarOrEmpty}
+			arguments (Input)
+				angles (3,1) double = [0; 0; 0]
+				seqID string {mustBeMember(seqID, "321")} = "321"
+				ref Frame {mustBeScalarOrEmpty} = Frame()
 			end
-			if nargin > 0
-				coords = Orien.getDirCosMat(angles, seqID)';
-			end
+			coords = Orien.getDirCosMat(angles, seqID)';
 			orien = orien@Tensor(coords, ref);
 			orien.seqID = seqID;
 		end

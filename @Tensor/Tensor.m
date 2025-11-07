@@ -3,13 +3,14 @@ classdef Tensor < GeomElem
 	%
 	% Its coordinates consist in a 3x3 matrix. It can be expressed and
 	% resolved in different frames. It can be rotated by some orientation in
-	% the same frame. Also to create new Tensors.
+	% the same frame.
 	%
 	% See also: Orien
 
 	properties
-		coords (3,3) double = [0 0 0; 0 0 0; 0 0 0];
-		ref = Frame.empty
+
+		coords (3,3) double
+
 	end
 
 	methods
@@ -17,25 +18,13 @@ classdef Tensor < GeomElem
 		%% Constructor
 		function tens = Tensor(coords, ref)
 			arguments (Input)
-				coords (3,3) double
-				ref Frame {mustBeScalarOrEmpty}
+				coords (3,3) double = zeros(3)
+				ref Frame {mustBeScalarOrEmpty} = Frame()
 			end
 			arguments (Output)
 				tens (1,1) Tensor
 			end
-			if nargin > 0
-				tens.coords = coords;
-				tens.ref = ref;
-			end
-		end
-
-
-		%% Property Management
-		function set.ref(tens, ref)
-			arguments (Input)
-				tens (1,1) Tensor
-				ref Frame {mustBeScalarOrEmpty}
-			end
+			tens.coords = coords;
 			tens.ref = ref;
 		end
 
