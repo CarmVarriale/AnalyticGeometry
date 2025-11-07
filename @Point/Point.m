@@ -11,8 +11,10 @@ classdef Point < GeomElem
 
 	end
 
-	properties (Hidden, Dependent)
+	properties (Dependent, Hidden)
+		
 		radius (1,1) Vector
+		
 	end
 
 	methods 
@@ -33,12 +35,6 @@ classdef Point < GeomElem
 
 		%% Property Management
 		function radius = get.radius(point)
-			arguments (Input)
-				point (1,1) Point
-			end
-			arguments (Output)
-				radius (1,1) Vector
-			end
 			radius = Vector(point.coords, point.ref);
 		end
 

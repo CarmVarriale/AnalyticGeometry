@@ -9,6 +9,11 @@ classdef Vector < GeomObj
 		coords (3,1) double
 
 	end
+
+	properties (Dependent, Hidden)
+
+		magnitude (1,1) double {mustBeNonnegative}
+	
 	end
     
     methods
@@ -28,6 +33,7 @@ classdef Vector < GeomObj
         
 		
 		%% Property Management        
+        function mag = get.magnitude(vec)
             mag = norm(vec.coords);
 		end
 

@@ -21,9 +21,11 @@ classdef Orien < Tensor
 
 	end
 
-	properties (Dependent)
+	properties (Dependent, Hidden)
+
 		dirCosMat {Orien.mustBeDirCosMat}
 		angles (3,1) double
+
 	end
 
 	methods
@@ -43,24 +45,21 @@ classdef Orien < Tensor
 
 		%% Property Management
 		function dirCosMat = get.dirCosMat(orien)
-			arguments (Input)
-				orien (1,1) Orien
-			end
-			arguments (Output)
-				dirCosMat {Orien.mustBeDirCosMat}
-			end
 			dirCosMat = orien.coords';
 		end
 
 
 		function angles = get.angles(orien)
-			arguments (Input)
-				orien (1,1) Orien
-			end
-			arguments (Output)
-				angles (3,1) double
-			end
 			angles = Orien.getAngleSeq(orien.dirCosMat, orien.seqID);
+		end
+
+		
+		function orien = set.angles(orien, angles)
+			arguments (Input)
+                orien (1,1) Orien
+                angles (3,1) double
+			end
+			orien.coords = Orien.getDirCosMat(angles, orien.seqID)';
 		end
 
 	end
