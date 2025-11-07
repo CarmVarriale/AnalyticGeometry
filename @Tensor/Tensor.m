@@ -38,9 +38,7 @@ classdef Tensor < GeomElem
 		tens = resolveInChild(tens, frame)
 
 		% Transformations
-		coords = calcRotate(tens, orien)
 		tens = rotate(tens, orien)
-		newTens = rotateNew(tens, orien)
 
 		% Visualization
 		disp(tens)

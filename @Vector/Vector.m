@@ -1,4 +1,4 @@
-classdef Vector < GeomObj
+classdef Vector < GeomElem
 	% Vector: a vector in 3D space, intended as a 1D tensor
 	%
 	% It can be expressed and resolved in different frames. It can be 
@@ -46,11 +46,8 @@ classdef Vector < GeomObj
 		vec = resolveInParent(vec)
 		vec = resolveInChild(vec, frame)
 
-		% Transformations
-		coords = calcRotate(vec, orien)
-		vec = rotate(vec, orien)
-		newVec = rotateNew(vec, orien)
-		        
+		% Transformation
+		vec = rotate(vec, orien)		        
 
         % Visualization
 		disp(vec)

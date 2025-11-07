@@ -7,5 +7,13 @@ end
 arguments (Output)
 	point (1,1) Point
 end
-point.coords = calcProject(point, dest);
+switch dest
+	case "1", coords = [point.coords(1); 0; 0];
+	case "2", coords = [0; point.coords(2); 0];
+	case "3", coords = [0; 0; point.coords(3)];
+	case "12", coords = [point.coords(1:2); 0];
+	case "13", coords = [point.coords(1); 0; point.coords(3)];
+	case "23", coords = [0; point.coords(2:3)];
+end
+point.coords = coords;
 end

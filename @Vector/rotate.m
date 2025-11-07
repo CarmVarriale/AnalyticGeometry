@@ -8,5 +8,5 @@ end
 arguments (Output)
 	vec (1,1) Vector
 end
-vec.coords = calcRotate(vec, orien);
+vec.coords = orien.coords * vec.coords;
 end

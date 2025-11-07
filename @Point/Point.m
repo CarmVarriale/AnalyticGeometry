@@ -47,18 +47,10 @@ classdef Point < GeomElem
 		point = resolveInParent(point)
 		point = resolveInChild(point, frame)
 
-		% Transformations
-		coords = calcTranslate(point, displ)
-		coords = calcRotate(point, orien, p0)
-		coords = calcProject(point, dest)
-
+		% Transformation
 		point = translate(point, displ)
 		point = rotate(point, orien, p0)
 		point = project(point, dest)
-
-		newPoint = translateNew(point, displ)
-		newPoint = rotateNew(point, orien, p0)
-		newPoint = projectNew(point, dest)
 
 		% Visualization
 		disp(point)
