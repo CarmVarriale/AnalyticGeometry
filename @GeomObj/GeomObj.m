@@ -1,4 +1,4 @@
-classdef GeomObj < matlab.mixin.Copyable
+classdef GeomObj
 	% GeomObj: an abstract geometric object in 3D space
 	%
 	% A geometric object must be defined with respect to some reference frame,
