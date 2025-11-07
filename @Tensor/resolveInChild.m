@@ -1,4 +1,4 @@
-function coords = viewInChild(tens, frame)
+function tens = resolveInChild(tens, frame)
 % Express the tensor coordinates in its child frame, without
 % modifying it in place
 arguments (Input)
@@ -6,7 +6,8 @@ arguments (Input)
 	frame (1,1) Frame
 end
 arguments (Output)
-	coords (3,3) double
+	tens (1,1) Tensor
 end
-coords = frame.orien.coords' * tens.coords * frame.orien.coords;
+tens.coords = frame.orien.coords' * tens.coords * frame.orien.coords;
+tens.ref = frame.ref;
 end

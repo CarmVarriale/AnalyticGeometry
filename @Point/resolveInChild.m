@@ -1,4 +1,4 @@
-function coords = viewInChild(point, frame)
+function point = resolveInChild(point, frame)
 % Express the coordinates of the point in its child frame, without
 % modifying it in place
 arguments (Input)
@@ -6,8 +6,8 @@ arguments (Input)
 	frame (1,1) Frame
 end
 arguments (Output)
-	coords (3,1) double
+	point (1,1) Point
 end
-coords = ...
-	point.radius.viewInChild(frame) - frame.origin.coords;
+point.coords = point.radius.resolveInChild(frame).coords - frame.origin.coords;
+point.ref = frame.ref;
 end

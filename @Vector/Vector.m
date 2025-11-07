@@ -68,8 +68,8 @@ classdef Vector < GeomObj
 	methods (Access = public)
 
 		% Resolution
-		newCoords = viewInParent(vec)
-		newCoords = viewInChild(vec, frame)
+		vec = resolveInParent(vec)
+		vec = resolveInChild(vec, frame)
 
 		% Transformations
 		coords = calcRotate(vec, orien)

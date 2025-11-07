@@ -1,11 +1,12 @@
-function newCoords = viewInParent(vec)
+function vec = resolveInParent(vec)
 % Express the coordinates of the vector in its parent frame,
 % without modifying it in place
 arguments (Input)
 	vec (1,1) Vector
 end
 arguments (Output)
-	newCoords (3,1) double
+	vec (1,1) Vector
 end
-newCoords = vec.ref.orien.coords * vec.coords;
+vec.coords = vec.ref.orien.coords * vec.coords;
+vec.ref = vec.ref.ref;
 end

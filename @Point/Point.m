@@ -1,4 +1,4 @@
-classdef Point < GeomObj
+classdef Point < GeomElem
 	% Point: a point in 3D space
 	%
 	% It can be expressed and resolved in different frames. It can be 
@@ -76,8 +76,8 @@ classdef Point < GeomObj
 	methods (Access = public)
 
 		% Resolution
-		coords = viewInParent(point)
-		coords = viewInChild(point, frame)
+		point = resolveInParent(point)
+		point = resolveInChild(point, frame)
 
 		% Transformations
 		coords = calcTranslate(point, displ)

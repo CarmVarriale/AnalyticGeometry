@@ -1,4 +1,4 @@
-classdef Tensor < GeomObj
+classdef Tensor < GeomElem
 	% Tensor: a generic 2D tensor in 3D space
 	%
 	% Its coordinates consist in a 3x3 matrix. It can be expressed and
@@ -45,8 +45,8 @@ classdef Tensor < GeomObj
 	methods (Access = public)
 
 		% Resolution
-		coords = viewInParent(tens)
-		coords = viewInChild(tens, frame)
+		tens = resolveInParent(tens)
+		tens = resolveInChild(tens, frame)
 
 		% Transformations
 		coords = calcRotate(tens, orien)
