@@ -1,41 +1,24 @@
 classdef GeomObj
-	% GeomObj: an abstract geometric object in 3D space
+	% Derived gemetric object in 3D space
 	%
-	% A geometric object must be defined with respect to some reference frame,
-	% its coordinates must be able to be expressed in different reference
-	% frames, and the object itself should be able to be resolved in different
-	% reference frames. While expressing an object's coordinates in its parent
-	% or child reference frame is left to the specific object, iterating this
-	% operation through the tree of reference frame is abstracted here using
-	% recursion.
+	% A non-fundamental geometric object which can be expressed and resolved in
+	% different frames. It is built using fundamental GeomElem objects.
+	% 
+	% It requires to define its own specific resolveIn method, which relies on 
+	% the resolution methods of its constituent GeomElem objects.
 	%
-	% See also: Frame, TreeNode
+	% See also: GeomElem, Curve
 
-	properties (Abstract)
-		ref Frame {mustBeScalarOrEmpty} 
+	properties
+
+
+		
 	end
 
 	methods (Abstract, Access = public)
 
 		% Resolution
-		newCoords = viewInParent(obj)
-		newCoords = viewInChild(obj, frame)
-
-	end
-
-	methods (Access = public)
-
-		% Resolution
-		newCoords = viewInAncestor(obj, frame)
-		newCoords = viewInDescendant(obj, frame)
-		newCoords = viewInWorld(obj)
-		newCoords = viewIn(obj, frame)
-		obj = resolveInParent(obj)
-		obj = resolveInChild(obj, frame)
-		obj = resolveInAncestor(obj, frame)
-		obj = resolveInDescendant(obj, frame)
-		obj = resolveInWorld(obj)
-		obj = resolveIn(obj, frame)
+		newObj = resolveIn(obj)
 
 	end
 
