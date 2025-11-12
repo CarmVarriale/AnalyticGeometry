@@ -35,7 +35,7 @@ classdef Orien < Tensor
 			arguments (Input)
 				angles (3,1) double = [0; 0; 0]
 				seqID string {mustBeMember(seqID, "321")} = "321"
-				ref Frame {mustBeScalarOrEmpty} = Frame()
+				ref Frame {mustBeScalarOrEmpty} = World.getWorld()
 			end
 			coords = Orien.getDirCosMat(angles, seqID)';
 			orien = orien@Tensor(coords, ref);

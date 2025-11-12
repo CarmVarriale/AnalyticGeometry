@@ -22,7 +22,7 @@ classdef Vector < GeomElem
         function vec = Vector(coords, ref)
 			arguments (Input)
 				coords (3,1) double = [0; 0; 0]
-				ref Frame {mustBeScalarOrEmpty} = Frame()
+				ref Frame {mustBeScalarOrEmpty} = World.getWorld()
 			end
 			arguments (Output)
 				vec (1,1) Vector

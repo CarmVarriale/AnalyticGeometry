@@ -19,7 +19,7 @@ classdef Tensor < GeomElem
 		function tens = Tensor(coords, ref)
 			arguments (Input)
 				coords (3,3) double = zeros(3)
-				ref Frame {mustBeScalarOrEmpty} = Frame()
+				ref Frame {mustBeScalarOrEmpty} = World.getWorld()
 			end
 			arguments (Output)
 				tens (1,1) Tensor
