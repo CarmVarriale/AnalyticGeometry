@@ -152,15 +152,18 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 	methods (Access = public)
 
 		% Resolution
-		newCoords = viewInParent(frame)
-		newCoords = viewInChild(frame, ref)
-		frame = resolveInParent(frame)
-		frame = resolveInChild(frame, refFrame)
+		frame = resolveIn(frame, ref)
 
 		% Transformations
 		frame = translate(frame, displ)
+		newFrame = translateNew(frame, displ)
 		frame = rotate(frame, orien, p0)
+		newFrame = rotateNew(frame, orien, p0)
 		frame = project(frame, dest)
+		newFrame = projectNew(frame, dest)
+
+	end
+
 	methods (Access = protected)
 
 		newFrame = copyElement(frame)

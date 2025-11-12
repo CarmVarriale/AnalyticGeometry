@@ -1,11 +1,9 @@
 function frame = translate(frame, displ)
-% Translate frame by translating its origin
+% Translate frame in-place by translating its origin
+% Modifies the frame directly (handle class behavior)
 arguments (Input)
 	frame (1,1) Frame
 	displ (1,1) Vector
 end
-arguments (Output)
-	frame (1,1) Frame
-end
-frame.locat = frame.origin.translate(displ).coords;
+frame.origin = frame.origin.translate(displ);
 end
