@@ -9,8 +9,10 @@ function obj = resolveIn(obj, frame)
 % Invariant properties of the object remain unchanged (lengths, areas, volumes).
 %
 % Because the object variable is passed by value, the function returns a new
-% obj variable that represent the same geometric entity as original obj variable, but expressed in the new frame.
-% If you want to overwrite the original variable, you need to assign the output of the function back to the original variable explicitly.
+% obj variable that represent the same geometric entity as the original obj 
+% variable, but expressed in the new frame.
+% If you want to overwrite the original variable, you need to assign the 
+% output of the function back to the original variable explicitly.
 %
 % Examples:
 % p = Point([1;2;3], F1)

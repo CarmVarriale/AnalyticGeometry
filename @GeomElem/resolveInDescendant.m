@@ -1,7 +1,8 @@
 function obj = resolveInDescendant(obj, frame)
 % Resolve the object in the specified descendant frame. 
 %
-% Recursively resolves the object in child frames until the specified frame is reached.
+% Recursively resolves the object in child frames until the specified frame 
+% is reached.
 % Every GeomElem has to implement its own specific resolveInChild method.
 %
 % See also: resolveIn, resolveInAncestor, resolveInWorld

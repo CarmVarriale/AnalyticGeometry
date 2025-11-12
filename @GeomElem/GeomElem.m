@@ -4,7 +4,7 @@ classdef GeomElem < GeomObj
 	% assembled to create more complex geometric objects.
 	%
 	% See also: GeomObj, Point, Vector, Tensor
-
+	
 	properties
 
 		ref Frame {mustBeScalarOrEmpty}

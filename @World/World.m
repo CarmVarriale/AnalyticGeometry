@@ -1,5 +1,5 @@
 classdef (Sealed) World < Frame
-	% World: the global reference frame
+	% The global reference frame
 	%
 	% This class provides a singleton instance of a global reference frame,
 	% which can be accessed via the static method getWorld(). The World frame
@@ -9,7 +9,7 @@ classdef (Sealed) World < Frame
 	methods (Access = private)
 
 		%% Constructor
-		function world = World(~)
+		function world = World()
 			world = world@Frame( ...
 				"World", ...
 				Point([0; 0; 0], Frame.empty), ...
@@ -22,7 +22,7 @@ classdef (Sealed) World < Frame
 
 	methods (Access = public, Static)
 
-		uniqueWorld = getWorld(~)
+		uniqueWorld = getWorld()
 
 	end
 
