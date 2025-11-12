@@ -49,6 +49,10 @@ classdef Vector < GeomElem
 		% Transformation
 		vec = rotate(vec, orien)		        
 
+		% Operation
+		newVec = uminus(vec)
+		newVec = plus(vec1, vec2)
+
         % Visualization
 		disp(vec)
         
