@@ -1,4 +1,4 @@
-function plot(curve, opts, style)
+function graphicObj = plot(curve, opts, style)
 	% Plot the curve in a specified reference frame
 	arguments (Input)
 		curve (1,1) Curve
@@ -8,7 +8,10 @@ function plot(curve, opts, style)
 	end
 	coords = [curve.resolveIn(opts.ref).coords{:}];
 	style = namedargs2cell(style);
-	plot3(opts.ax, coords(1,:), coords(2,:), coords(3,:), style{:});
+	graphicObj = plot3( ...
+		opts.ax, ...
+		coords(1,:), coords(2,:), coords(3,:), ...
+		style{:});
 	axis(opts.ax, "equal");
 	if all(coords(2,:) == 0)
 		view(0, 0);

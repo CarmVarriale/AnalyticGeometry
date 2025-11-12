@@ -54,6 +54,7 @@ classdef Point < GeomElem
 
 		% Visualization
 		disp(point)
+		graphicObj = plot(curve, opts, style)
 
 	end
 

@@ -62,7 +62,7 @@ classdef Curve < GeomObj
 
 		% Visualization
 		disp(curve)
-		plot(curve, opts, style)
+		graphicObj = plot(curve, opts, style)
 
 	end
 
