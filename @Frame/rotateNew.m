@@ -1,6 +1,6 @@
 function newFrame = rotateNew(frame, uID, orien, p0)
 % Create a new rotated frame without modifying the original
-% Returns a NEW frame with rotated origin and orientation
+% Returns a new frame with rotated origin and orientation
 arguments (Input)
 	frame (1,1) Frame
 	uID (1,1) string

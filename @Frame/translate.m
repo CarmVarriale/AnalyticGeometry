@@ -1,6 +1,7 @@
 function frame = translate(frame, displ)
-% Translate frame in-place by translating its origin
-% Modifies the frame directly (handle class behavior)
+% Translate the frame origin
+% 
+% Modifies the frame object in place
 arguments (Input)
 	frame (1,1) Frame
 	displ (1,1) Vector

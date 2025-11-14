@@ -1,6 +1,6 @@
 function newFrame = translateNew(frame, uID, displ)
 % Create a new translated frame without modifying the original
-% Returns a NEW frame with translated origin
+% Returns a new frame with translated origin
 arguments (Input)
 	frame (1,1) Frame
 	uID (1,1) string

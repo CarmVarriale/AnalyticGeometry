@@ -1,6 +1,6 @@
 function newFrame = projectNew(frame, uID, destID)
 % Create a new projected frame without modifying the original
-% Returns a NEW frame with projected origin
+% Returns a new frame with projected origin
 arguments (Input)
 	frame (1,1) Frame
 	uID (1,1) string

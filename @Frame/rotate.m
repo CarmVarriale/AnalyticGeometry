@@ -1,6 +1,7 @@
 function frame = rotate(frame, orien, p0)
-% Rotate frame in-place by rotating its origin and updating its orientation
-% Modifies the frame directly (handle class behavior)
+% Rotate the frame origin and orientation coherently
+% 
+% Modifies the frame object in place
 arguments (Input)
 	frame (1,1) Frame
 	orien (1,1) Orien

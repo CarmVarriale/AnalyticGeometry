@@ -5,6 +5,5 @@ arguments (Input)
 	frame (1,1) Frame
 	destID (1,1) {mustBeMember(destID, ["1","2","3","12","13","23"])}
 end
-% Project the origin in-place
 frame.origin = frame.origin.project(destID);
 end

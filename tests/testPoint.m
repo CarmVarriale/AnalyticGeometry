@@ -167,14 +167,26 @@ classdef testPoint < matlab.unittest.TestCase
 			v2 = Vector([0 1 0], testCase.world);
 			v3 = Vector([0 0 1], testCase.world);
 			v4 = Vector([-2 -1 -1], testCase.world);
+
+			% Test translation with vectors in the same frame
 			testCase.verifyEqual(p1.translate(v1).coords, [2; 0; 0]);
 			testCase.verifyEqual(p1.translate(v2).coords, [1; 1; 0]);
 			testCase.verifyEqual( ...
 				p1.translate(v3).translate(v4).coords, ...
 				[-1; -1; 0]);
-			testCase.verifyError( ...
-				@() p1.translate(Vector([0 0 0], testCase.fr1)), ...
-				"Point:translate:sameRef");
+			
+			% Test translation with vectors in different frames
+			p2 = Point([1 0 0], testCase.fr1);
+			v5 = Vector([1 0 0], testCase.fr2a);
+			v6 = Vector([0 1 0], testCase.fr3a);
+			testCase.verifyEqual(p2.translate(v5).coords, [2; 0; 0]);
+			testCase.verifyEqual(p2.translate(v6).coords, [1; 0; 1]);
+			
+			% Test that mixed frame translation resolves correctly
+			p3 = Point([2 0 0], testCase.fr1);
+			v7 = Vector([1 0 0], testCase.world);
+			testCase.verifyEqual(p3.translate(v7).ref, p3.ref);
+			testCase.verifySameHandle(p3.translate(v7).ref, p3.ref);
 		end
 
 
@@ -207,9 +219,35 @@ classdef testPoint < matlab.unittest.TestCase
 				p1.rotate(r4,p0).rotate(r4,p0).coords, ...
 				[0; 1; 0], ...
 				AbsTol=1e-12);
-			testCase.verifyError( ...
-				@() p1.rotate(r1, Point([0; 0; 0], testCase.fr1)), ...
-				"Point:rotate:sameRef");
+			
+			% Test rotation with orientation in different frame
+			p2 = Point([1 0 0], testCase.fr1);
+			r5 = Orien([pi/2, 0, 0], "321", testCase.world);
+			center1 = Point([0 0 0], testCase.fr1);
+			testCase.verifyEqual( ...
+				p2.rotate(r5, center1).coords, ...
+				[0; 1; 0]);
+			
+			p3 = Point([3 0 0], testCase.fr1);
+			r6 = Orien([0, 0, pi/2], "321", testCase.fr2a);
+			center2 = Point([1 1 1], testCase.fr1);
+			testCase.verifyEqual( ...
+				p3.rotate(r6, center2).coords, ...
+				[3; 2; 0]);
+			testCase.verifyEqual( ...
+				p3.rotate(r6, center2).ref, ...
+				testCase.fr1);
+			
+			p4 = Point([2 0 0], testCase.fr1);
+			r7 = Orien([pi/2, 0, 0], "321", testCase.fr3a);
+			center3 = Point([1 1 1], testCase.world);
+			testCase.verifyEqual( ...
+				p4.rotate(r7, center3).coords, ...
+				[0; 0; 2]);
+			testCase.verifyEqual( ...
+				p4.rotate(r7, center3).ref, ...
+				testCase.fr1);
+
 		end
 
 	end
