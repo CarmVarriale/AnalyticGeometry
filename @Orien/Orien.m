@@ -64,7 +64,6 @@ classdef Orien < Tensor
 
 	end
 
-	%% Methods
 	methods (Static, Access = public)
 
 		% Validation
@@ -74,6 +73,12 @@ classdef Orien < Tensor
 		% Parametrizations
 		dirCosMat = getDirCosMat(angleSeq, seqID)
 		angleSeq = getAngleSeq(dirCosMat, seqID)
+
+	end
+
+	methods 
+
+		orien = convertSeqID(orien, newSeqID)
 
 	end
 
