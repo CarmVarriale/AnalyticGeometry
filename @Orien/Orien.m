@@ -17,7 +17,7 @@ classdef Orien < Tensor
 
 	properties
 
-		seqID string {mustBeMember(seqID, "321")}
+		seqID string
 
 	end
 
@@ -34,7 +34,7 @@ classdef Orien < Tensor
 		function orien = Orien(angles, seqID, ref)
 			arguments (Input)
 				angles (3,1) double = [0; 0; 0]
-				seqID string {mustBeMember(seqID, "321")} = "321"
+				seqID string = "321"
 				ref Frame {mustBeScalarOrEmpty} = World.getWorld()
 			end
 			coords = Orien.getDirCosMat(angles, seqID)';

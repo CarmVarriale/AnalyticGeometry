@@ -3,7 +3,7 @@ function orien = convertSeqID(orien, newSeqID)
 % angles
 arguments (Input)
     orien (1,1) Orien
-    newSeqID string {mustBeMember(newSeqID, "321")} 
+    newSeqID string
 end
 arguments (Output)
     orien (1,1) Orien
