@@ -7,14 +7,7 @@ function T1 = getDirCosMat1(angle)
 % For this reason, this is also a fundamental Direction Cosine Matrix.
 % If Vb is the array of coordinates of a Vector in the Base frame, the array of
 % coordinates of the same Vector in the Follower Frame is Vf = R1 * Vb
-arguments (Input)
-	angle (1,1) double
-end
-arguments (Output)
-	T1 {Orien.mustBeDirCosMat}
-end
 c = cos(angle);
 s = sin(angle);
 T1 = [1 0 0; 0 c s; 0 -s c];
-T1(abs(T1) < 1e-12) = 0;
 end
