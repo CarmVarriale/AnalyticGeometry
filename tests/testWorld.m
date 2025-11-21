@@ -29,7 +29,7 @@ classdef testWorld < matlab.unittest.TestCase
 	methods (Test)
 
 		function testWorldNameValue(testCase)
-			testCase.verifyEqual(testCase.world.uID, "World");
+			testCase.verifyEqual(testCase.world.name, "World");
 		end
 
 

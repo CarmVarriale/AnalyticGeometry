@@ -189,7 +189,7 @@ classdef testFrame < matlab.unittest.TestCase
 
 		function testDefaultObject(testCase)
 			frDefault = Frame();
-			testCase.verifyEqual(frDefault.uID, "Default Frame");
+			testCase.verifyEqual(frDefault.name, "Default Frame");
 			testCase.verifyEqual(frDefault.origin.coords, [0;0;0]);
 			testCase.verifyEqual(frDefault.orien.angles, [0;0;0]);
 			testCase.verifyEqual(frDefault.orien.seqID, "321");
@@ -200,9 +200,9 @@ classdef testFrame < matlab.unittest.TestCase
 				Point([1;2;3], testCase.world), ...
 				Orien([pi/4; pi/4; pi/4], "321", testCase.world), ...
 				testCase.world);
-			testCase.verifyEqual(frArrayDefault(5).uID, "TestArray");
-			testCase.verifyEqual(frArrayDefault(1).uID, "Default Frame");
-			testCase.verifyEqual(frArrayDefault(2).uID, "Default Frame");
+			testCase.verifyEqual(frArrayDefault(5).name, "TestArray");
+			testCase.verifyEqual(frArrayDefault(1).name, "Default Frame");
+			testCase.verifyEqual(frArrayDefault(2).name, "Default Frame");
 			testCase.verifyNotSameHandle( ...
 				frArrayDefault(1), ...
 				frArrayDefault(2));
@@ -224,7 +224,7 @@ classdef testFrame < matlab.unittest.TestCase
 				testCase.fr3.translateNew("newID", vec), ...
 				testCase.fr3);
 			testCase.verifyEqual( ...
-				testCase.fr3.translateNew("newID2", vec).uID, ...
+				testCase.fr3.translateNew("newID2", vec).name, ...
 				"newID2");
 		end
 
@@ -243,8 +243,7 @@ classdef testFrame < matlab.unittest.TestCase
 			fr1copy = copy(testCase.fr1);
 
 			testCase.verifyNotSameHandle(fr1copy, testCase.fr1);
-			testCase.verifyEqual(fr1copy, testCase.fr1);
-			testCase.verifyEqual(fr1copy.uID, testCase.fr1.uID);
+			testCase.verifyEqual(fr1copy.name, testCase.fr1.name);
 			testCase.verifyEqual(fr1copy.origin, testCase.fr1.origin);
 			testCase.verifyEqual(fr1copy.orien, testCase.fr1.orien);
 			

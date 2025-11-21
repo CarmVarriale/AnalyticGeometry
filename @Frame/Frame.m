@@ -13,7 +13,7 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 
 	properties
 
-		uID (1,1) string
+		name (1,1) string
 
 	end
 
@@ -42,14 +42,14 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 	methods
 
 		%% Constructor
-		function frame = Frame(uID, origin, orien, ref)
+		function frame = Frame(name, origin, orien, ref)
 			arguments (Input)
-				uID (1,1) string {mustBeNonzeroLengthText} = "Default Frame"
+				name (1,1) string {mustBeNonzeroLengthText} = "Default Frame"
 				origin Point {mustBeScalarOrEmpty} = Point()
 				orien Orien  {mustBeScalarOrEmpty} = Orien()
 				ref Frame {mustBeScalarOrEmpty} = World.getWorld()
 			end
-			frame.uID = uID;
+			frame.name = name;
 			frame.origin = origin;
 			frame.orien = orien;
 			frame.ref = ref;
