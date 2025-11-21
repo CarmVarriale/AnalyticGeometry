@@ -174,6 +174,7 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 
 		% Visualization
 		disp(frame)
+		flag = eq(A, B)
 
 	end
 
