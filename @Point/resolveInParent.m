@@ -7,6 +7,7 @@ end
 arguments (Output)
 	point (1,1) Point
 end
-point.coords = point.ref.origin.coords + point.radius.resolveInParent().coords;
+displ = point.ref.origin.radius + point.radius;
+point.coords = displ.coords;
 point.ref = point.ref.ref;
 end

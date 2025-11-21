@@ -8,6 +8,7 @@ end
 arguments (Output)
 	point (1,1) Point
 end
-point.coords = point.radius.resolveInChild(frame).coords - frame.origin.coords;
+displ = point.radius - frame.origin.radius;
+point.coords = displ.resolveInChild(frame).coords;
 point.ref = frame.ref;
 end
