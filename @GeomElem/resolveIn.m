@@ -28,6 +28,12 @@ arguments (Output)
 	obj (1,1) GeomObj
 end
 if obj.ref ~= frame
-	obj = obj.resolveInAncestor(frame).resolveInDescendant(frame);
+	if obj.ref.isAncestorOf(frame)
+		obj = obj.resolveInDescendant(frame);
+	elseif frame.isAncestorOf(obj.ref)
+		obj = obj.resolveInAncestor(frame);
+	else
+		obj = obj.resolveInAncestor(frame).resolveInDescendant(frame);
+	end
 end
 end

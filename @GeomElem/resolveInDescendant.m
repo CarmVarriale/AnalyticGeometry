@@ -13,10 +13,9 @@ end
 arguments (Output)
 	obj (1,1) GeomObj
 end
-if obj.ref ~= frame
-	descendants = flip([frame; frame.getAncestors(upTo = obj.ref)]);
-	for i = 1:numel(descendants)
-		obj = obj.resolveInChild(descendants(i));
-	end
+ancestors = frame.getAncestors(upTo = obj.ref);
+descendants = [flip(ancestors(1:end-1)); frame];
+for i = 1:numel(descendants)
+	obj = obj.resolveInChild(descendants(i));
 end
 end
