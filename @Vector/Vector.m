@@ -52,6 +52,7 @@ classdef Vector < GeomElem
 		% Operation
 		newVec = uminus(vec)
 		newVec = plus(vec1, vec2)
+		newVec = minus(vec1, vec2)
 
         % Visualization
 		disp(vec)
