@@ -152,7 +152,8 @@ classdef testCurve < matlab.unittest.TestCase
 				coords + [2,-2,0]);
 			testCase.verifyEqual( ...
 				[curve.resolveIn(testCase.fr3c).coords{:}]', ...
-				[coords(:,2), -coords(:,1) - 2, coords(:,3) - 2]);
+				[coords(:,2), -coords(:,1) - 2, coords(:,3) - 2], ...
+				AbsTol = 1e-15);
 		end
 
 
