@@ -23,6 +23,7 @@ classdef Orien < Tensor
 
 	properties (Dependent, Hidden)
 
+		quat quaternion
 		dirCosMat {Orien.mustBeDirCosMat}
 		angles (3,1) double
 
@@ -43,46 +44,46 @@ classdef Orien < Tensor
 		end
 
 
-		%% Property Management
-		function dirCosMat = get.dirCosMat(orien)
-			dirCosMat = orien.coords';
-		end
+	%% Property Management
+	function quat = get.quat(orien)
+		quat = quaternion(orien.coords', "rotmat", "frame");
+	end
 
 
-		function angles = get.angles(orien)
-			angles = Orien.getAngleSeq(orien.dirCosMat, orien.seqID);
-		end
+	function dirCosMat = get.dirCosMat(orien)
+		dirCosMat = orien.coords';
+	end
 
-		
-		function orien = set.angles(orien, angles)
-			arguments (Input)
-                orien (1,1) Orien
-                angles (3,1) double
-			end
-			orien.coords = Orien.getDirCosMat(angles, orien.seqID)';
+
+	function angles = get.angles(orien)
+		angles = orien.quat.euler( ...
+			orien.seqID ...
+				.replace("3","Z").replace("2","Y").replace("1","X"), ...
+			"frame")';
+	end
+
+
+	function orien = set.angles(orien, angles)
+		arguments (Input)
+			orien (1,1) Orien
+			angles (3,1) double
 		end
+		orien.coords = Orien.getDirCosMat(angles, orien.seqID)';
+	end
 
 	end
 
-	methods (Static, Access = public)
-
-		% Validation
-		flag = isDirCosMat(input)
-		mustBeDirCosMat(input)
+	methods (Static, Access = public)		
 
 		% Parametrizations
 		dirCosMat = getDirCosMat(angleSeq, seqID)
-		angleSeq = getAngleSeq(dirCosMat, seqID)
-
-	end
-
-	methods 
-
-		orien = convertSeqID(orien, newSeqID)
 
 	end
 
 	methods (Access = public)
+
+		% Parametrizations
+		orien = convertSeqID(orien, newSeqID)
 		
 		% Visualization
 		disp(orien)

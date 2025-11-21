@@ -8,8 +8,11 @@ end
 arguments (Output)
     orien (1,1) Orien
 end
-if ~newSeqID == orien.seqID
-	angles = Orien.getAngleSeq(orien.dirCosMat, newSeqID);
-	orien = Orien(angles, newSeqID, orien.ref);
+if newSeqID ~= orien.seqID
+    orien.angles = orien.quat.euler( ...
+        newSeqID ...
+            .replace("3","Z").replace("2","Y").replace("1","X"), ...
+        "frame")';
+    orien.seqID = newSeqID;
 end
 end
