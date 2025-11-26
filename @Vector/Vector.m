@@ -47,6 +47,7 @@ classdef Vector < GeomElem
 		vec = resolveInChild(vec, frame)
 
 		% Transformation
+		vec = project(vec, dest)
 		vec = rotate(vec, orien)		        
 
 		% Operation
