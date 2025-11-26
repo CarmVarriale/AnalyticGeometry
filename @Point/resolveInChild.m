@@ -10,5 +10,5 @@ arguments (Output)
 end
 displ = point.radius - frame.origin.radius;
 point.coords = displ.resolveInChild(frame).coords;
-point.ref = frame.ref;
+point.ref = frame;
 end

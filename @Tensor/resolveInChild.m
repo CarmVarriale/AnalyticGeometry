@@ -9,5 +9,5 @@ arguments (Output)
 	tens (1,1) Tensor
 end
 tens.coords = frame.orien.coords' * tens.coords * frame.orien.coords;
-tens.ref = frame.ref;
+tens.ref = frame;
 end
