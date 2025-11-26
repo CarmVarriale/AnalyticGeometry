@@ -1,8 +1,18 @@
-function newVec = mtimes(tens, vec)
-% Multiply a tensor by a vector (tensor * vector)
+function newObj = mtimes(tens, obj)
+% Multiply a tensor by a vector (tensor * vector) or by another tensor 
+% (tensor * tensor).
 arguments (Input)
 	tens (1,1) Tensor
-	vec (1,1) Vector
+	obj (1,1) {mustBeA(obj, ["Vector", "Tensor"])}
 end
-newVec  = Vector(tens.resolveIn(vec.ref).coords * vec.coords, vec.ref);
+if isa(obj, "Vector")
+    newObj  = Vector( ...
+		tens.resolveIn(obj.ref).coords * obj.coords, ...
+		obj.ref);
+else
+	newObj = feval( ...
+		class(tens), ...
+		tens.coords * obj.resolveIn(tens.ref).coords, ...
+		obj.ref);
+end
 end

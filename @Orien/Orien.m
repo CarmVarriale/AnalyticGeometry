@@ -32,28 +32,62 @@ classdef Orien < Tensor
 	methods
 
 	%% Constructor
-	function orien = Orien(param1, param2, ref)
-		arguments (Input)
-			param1 {mustBeA(param1, ["double", "Vector"])} = [0; 0; 0]
-			param2 {mustBeA(param2, ["string", "double"])} = "321"
-			ref Frame {mustBeScalarOrEmpty} = World.getWorld()
+	function orien = Orien(varargin)
+		% Signature 1: Orien(coords, ref)
+		% Signature 2: Orien(angles, seqID, ref)
+		% Signature 3: Orien(axis, angle)
+		arguments (Input, Repeating)
+			varargin
 		end
-		if isa(param1, "double") && isa(param2, "string")
-			% Euler angles representation
-			angles = param1;
-			seqID = param2;
-			coords = Orien.getDirCosMat(angles, seqID)';
-		elseif isa(param1, "Vector") && isa(param2, "double")
-			% Axis-angle representation
-			axis = param1.resolveIn(ref) / param1.magnitude;
-			angle = param2;
-			% Rodrigues' rotation formula for rotation matrix
-			% R = I + sin(θ)K + (1-cos(θ))K²
-			% where K is the skew-symmetric matrix of the axis
-			K = axis.getSkew();
-			R = eye(3) + sin(angle) * K + (1 - cos(angle)) * (K * K);
-			coords = R;
-			seqID = "321";
+		seqID = "321";
+		if nargin == 0
+			% Default constructor: zero orientation
+			coords = eye(3);
+			ref = World.getWorld();
+		elseif nargin == 1
+			% Single argument must be coords (3x3 matrix)
+			coords = varargin{1};
+			mustBeA(coords, "double");
+			assert(isequal(size(coords), [3, 3]), ...
+				"Single argument must be a 3x3 matrix");
+			ref = World.getWorld();
+		elseif nargin == 2
+			if isa(varargin{1}, "double") && isequal(size(varargin{1}), [3, 3])
+				% Signature 1: coords, ref
+				coords = varargin{1};
+				ref = varargin{2};
+				mustBeA(ref, "Frame");
+			elseif isa(varargin{1}, "Vector") && isa(varargin{2}, "double")
+				% Signature 3: axis, angle
+				axis = varargin{1};
+				angle = varargin{2};
+				axis = axis / axis.magnitude;
+				K = axis.getSkew();
+				R = eye(3) + sin(angle) * K + (1 - cos(angle)) * (K * K);
+				coords = R;
+				ref = axis.ref;
+			else
+				error( ...
+					"Orien:Orien:InvalidTwoArgumentSignature", ...
+					"Invalid two-argument signature");
+			end
+		elseif nargin == 3
+			if isa(varargin{1}, "double") && isa(varargin{2}, "string")
+				% Signature 2: angles, seqID, ref
+				angles = varargin{1};
+				seqID = varargin{2};
+				ref = varargin{3};
+				mustBeA(ref, "Frame");
+				coords = Orien.getDirCosMat(angles, seqID)';
+			else
+				error( ...
+					"Orien:Orien:InvalidTwoArgumentSignature", ...
+					"Invalid three-argument signature");
+			end
+		else
+			error( ...
+				"Orien:Orien:InvalidTwoArgumentSignature", ...
+				"Too many input arguments");
 		end
 		orien = orien@Tensor(coords, ref);
 		orien.seqID = seqID;
@@ -72,10 +106,10 @@ classdef Orien < Tensor
 
 
 	function angles = get.angles(orien)
-		angles = orien.quat.euler( ...
-			orien.seqID ...
-				.replace("3","Z").replace("2","Y").replace("1","X"), ...
-			"frame")';
+		% Avoid recursion: compute quaternion directly from coords
+		q = quaternion(orien.coords', "rotmat", "frame");
+		seqStr = strrep(strrep(strrep(orien.seqID, "3", "Z"), "2", "Y"), "1", "X");
+		angles = q.euler(seqStr, "frame")';
 	end
 
 

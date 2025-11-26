@@ -7,5 +7,5 @@ end
 arguments (Output)
 	tens (1,1) Tensor
 end
-tens.coords = tens.coords * orien.resolveIn(tens.ref).coords;
+tens = tens * orien;
 end

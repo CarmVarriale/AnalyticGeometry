@@ -7,5 +7,5 @@ end
 arguments (Output)
 	vec (1,1) Vector
 end
-vec.coords = orien.resolveIn(vec.ref).coords * vec.coords;
+vec = orien * vec;
 end
