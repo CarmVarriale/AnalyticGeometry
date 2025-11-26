@@ -57,7 +57,7 @@ classdef Curve < GeomObj
 
 		% Transformations
 		curve = translate(curve, displ)
-		curve = rotate(curve, orien, p0)
+		curve = rotate(curve, about, param)
 		curve = project(curve, dest)
 
 		% Visualization

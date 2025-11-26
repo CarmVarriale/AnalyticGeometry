@@ -157,8 +157,8 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 		% Transformations
 		frame = translate(frame, displ)
 		newFrame = translateNew(frame, displ)
-		frame = rotate(frame, orien, p0)
-		newFrame = rotateNew(frame, orien, p0)
+		frame = rotate(frame, about, param)
+		newFrame = rotateNew(frame, about, param)
 		frame = project(frame, dest)
 		newFrame = projectNew(frame, dest)
 

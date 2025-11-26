@@ -49,7 +49,7 @@ classdef Point < GeomElem
 
 		% Transformation
 		point = translate(point, displ)
-		point = rotate(point, orien, p0)
+		point = rotate(point, about, param)
 		point = project(point, dest)
 
 		% Operation
