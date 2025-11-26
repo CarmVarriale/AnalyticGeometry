@@ -7,5 +7,5 @@ end
 arguments (Output)
 	point (1,1) Point
 end
-point.coords = point.coords + displ.resolveIn(point.ref).coords;
+point = point + displ;
 end
