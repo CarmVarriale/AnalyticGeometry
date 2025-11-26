@@ -31,17 +31,33 @@ classdef Orien < Tensor
 
 	methods
 
-		%% Constructor
-		function orien = Orien(angles, seqID, ref)
-			arguments (Input)
-				angles (3,1) double = [0; 0; 0]
-				seqID string = "321"
-				ref Frame {mustBeScalarOrEmpty} = World.getWorld()
-			end
-			coords = Orien.getDirCosMat(angles, seqID)';
-			orien = orien@Tensor(coords, ref);
-			orien.seqID = seqID;
+	%% Constructor
+	function orien = Orien(param1, param2, ref)
+		arguments (Input)
+			param1 {mustBeA(param1, ["double", "Vector"])} = [0; 0; 0]
+			param2 {mustBeA(param2, ["string", "double"])} = "321"
+			ref Frame {mustBeScalarOrEmpty} = World.getWorld()
 		end
+		if isa(param1, "double") && isa(param2, "string")
+			% Euler angles representation
+			angles = param1;
+			seqID = param2;
+			coords = Orien.getDirCosMat(angles, seqID)';
+		elseif isa(param1, "Vector") && isa(param2, "double")
+			% Axis-angle representation
+			axis = param1.resolveIn(ref) / param1.magnitude;
+			angle = param2;
+			% Rodrigues' rotation formula for rotation matrix
+			% R = I + sin(θ)K + (1-cos(θ))K²
+			% where K is the skew-symmetric matrix of the axis
+			K = axis.getSkew();
+			R = eye(3) + sin(angle) * K + (1 - cos(angle)) * (K * K);
+			coords = R;
+			seqID = "321";
+		end
+		orien = orien@Tensor(coords, ref);
+		orien.seqID = seqID;
+	end
 
 
 	%% Property Management

@@ -48,12 +48,15 @@ classdef Vector < GeomElem
 
 		% Transformation
 		vec = project(vec, dest)
-		vec = rotate(vec, orien)		        
+		vec = rotate(vec, orien)	
+		matrix = getSkew(vec)	        
 
 		% Operation
 		newVec = uminus(vec)
 		newVec = plus(vec1, vec2)
 		newVec = minus(vec1, vec2)
+		newVec = mtimes(arg1, arg2)
+		newVec = mrdivide(vec1, scalar)
 		scalar = dot(vec1, vec2)
 		newVec = cross(vec1, vec2)
 
