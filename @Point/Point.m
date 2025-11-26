@@ -52,6 +52,11 @@ classdef Point < GeomElem
 		point = rotate(point, orien, p0)
 		point = project(point, dest)
 
+		% Operation
+		newPoint = uminus(point)
+		newPoint = plus(point1, vec)
+		vec = minus(point1, point2)
+
 		% Visualization
 		disp(point)
 		graphicObj = plot(curve, opts, style)

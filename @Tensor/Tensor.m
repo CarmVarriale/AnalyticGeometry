@@ -40,6 +40,9 @@ classdef Tensor < GeomElem
 		% Transformations
 		tens = rotate(tens, orien)
 
+		% Operation
+		newTens = mtimes(tens, vec)
+
 		% Visualization
 		disp(tens)
 		

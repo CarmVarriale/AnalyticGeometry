@@ -53,6 +53,8 @@ classdef Vector < GeomElem
 		newVec = uminus(vec)
 		newVec = plus(vec1, vec2)
 		newVec = minus(vec1, vec2)
+		scalar = dot(vec1, vec2)
+		newVec = cross(vec1, vec2)
 
         % Visualization
 		disp(vec)

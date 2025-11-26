@@ -21,6 +21,11 @@ classdef GeomElem < GeomObj
 
 	methods (Sealed, Access = public)
 
+		% Comparison
+		flag = eq(A, B)
+		flag = isequal(A, B)
+		flag = ne(A, B)
+
 		% Resolution
 		obj = resolveInAncestor(obj, frame)
 		obj = resolveInDescendant(obj, frame)
