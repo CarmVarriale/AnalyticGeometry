@@ -230,6 +230,64 @@ classdef testOrien < matlab.unittest.TestCase
 			testCase.verifyWarningFree(@() disp(oEmpty));
 		end
 
+
+	function testOrienFromVectorAndAngle(testCase)
+		% Test creating orientation from axis-angle (Vector + angle)
+		
+		% Rotation of π/2 about Z-axis
+		vecZ = Vector([0; 0; 1], testCase.frames.world);
+		
+		o1 = Orien(vecZ, pi/2, testCase.frames.world);
+		testCase.verifyEqual(o1.ref, testCase.frames.world);
+		
+		% Compare with Euler angle representation
+		o2 = Orien([pi/2; 0; 0], "321", testCase.frames.world);
+		testCase.verifyEqual(o1.coords, o2.coords, "AbsTol", 1e-15);
 	end
+	function testOrienFromVectorAndAngleXAxis(testCase)
+		% Test rotation about X-axis
+		vecX = Vector([1; 0; 0], testCase.frames.world);
+		
+		o = Orien(vecX, pi/2, testCase.frames.world);
+		
+		% Verify against Euler angles: 90° about X
+		o_euler = Orien([0; 0; pi/2], "321", testCase.frames.world);
+		testCase.verifyEqual(o.coords, o_euler.coords, "AbsTol", 1e-15);
+	end
+	function testOrienFromVectorAndAngleYAxis(testCase)
+		% Test rotation about Y-axis
+		vecY = Vector([0; 1; 0], testCase.frames.world);
+		
+		o = Orien(vecY, pi/2, testCase.frames.world);
+		
+		% Verify against Euler angles: 90° about Y
+		o_euler = Orien([0; pi/2; 0], "321", testCase.frames.world);
+		testCase.verifyEqual(o.coords, o_euler.coords, "AbsTol", 1e-15);
+	end
+	function testOrienFromVectorAndAngleDiagonal(testCase)
+		% Test rotation about diagonal axis
+		vecDiag = Vector([1; 1; 1], testCase.frames.world);
+		
+		o = Orien(vecDiag, 2*pi/3, testCase.frames.world);
+		
+		% 120° rotation about [1,1,1] should cycle coordinates
+		% Apply to a vector to verify
+		v = Vector([1; 0; 0], testCase.frames.world);
+		v_rot = o * v;
+		testCase.verifyEqual(v_rot.coords, [0; 1; 0], "AbsTol", 1e-15);
+	end
+	function testOrienFromVectorInDifferentFrame(testCase)
+		% Test that vector frame is respected
+		vecFr1 = Vector([0; 0; 1], testCase.frames.fr1);
+		
+		o = Orien(vecFr1, pi/2, testCase.frames.world);
+		
+		% Vector should be resolved to world frame first
+		testCase.verifyEqual(o.ref, testCase.frames.world);
+		
+		% Since fr1 has no rotation, Z-axis is same in both frames
+		o2 = Orien([pi/2; 0; 0], "321", testCase.frames.world);
+		testCase.verifyEqual(o.coords, o2.coords, "AbsTol", 1e-15);
+	end	end
 
 end

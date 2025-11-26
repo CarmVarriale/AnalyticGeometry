@@ -12,7 +12,6 @@ if isa(about, "Point")
 		"When rotating about a Point, param must be an Orien");
 	p0 = about;
 	orien = param;
-	point = p0 + orien * (point - p0);
 elseif isa(about, "Line")
 	% Rotate about a line using angle
 	assert(isa(param, "double"), ...
@@ -20,14 +19,8 @@ elseif isa(about, "Line")
 		"When rotating about a Line, param must be a double (angle)");
 	line = about;
 	angle = param;
-	relPos = point - line.anchor;
-	relPosParallel = relPos.project(line);
-	relPosPerpend = relPos - relPosParallel;
-	
-	% Rodrigues' formula: v_rot = v*cos(angle) + (u × v)*sin(angle)
-	relPosPerpRotated = ...
-		relPosPerpend * cos(angle) + ...
-		cross(line.direc, relPosPerpend) * sin(angle);
-	point = line.anchor + relPosParallel + relPosPerpRotated;
+	p0 = line.anchor;
+	orien = Orien(line.direc, angle);
 end
+point = p0 + orien * (point - p0);
 end

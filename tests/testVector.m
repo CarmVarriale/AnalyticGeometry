@@ -42,7 +42,7 @@ classdef testVector < matlab.unittest.TestCase
 				vectorsArrayDefault(2).ref.name, ...
 				"World")
 		end
-		
+
 
 		function testRotate(testCase)
 			v0 = Vector([1; 0; 0], testCase.frames.fr3);
@@ -307,6 +307,35 @@ classdef testVector < matlab.unittest.TestCase
 		end
 
 
+		function testMrdivideOperator(testCase)
+			% Test vector / scalar
+			v1 = Vector([6; 9; 12], testCase.frames.world);
+			v2 = v1 / 3;
+			testCase.verifyEqual(v2.coords, [2; 3; 4]);
+			testCase.verifyEqual(v2.ref, testCase.frames.world);
+
+			% Test with different scalar
+			v3 = v1 / 2;
+			testCase.verifyEqual(v3.coords, [3; 4.5; 6]);
+			testCase.verifyEqual(v3.ref, testCase.frames.world);
+
+			% Test with negative scalar
+			v4 = v1 / -3;
+			testCase.verifyEqual(v4.coords, [-2; -3; -4]);
+
+			% Test normalization (divide by magnitude)
+			v5 = Vector([3; 4; 0], testCase.frames.world);
+			v5_normalized = v5 / v5.magnitude;
+			testCase.verifyEqual( ...
+				v5_normalized.coords, ...
+				[0.6; 0.8; 0], ...
+				AbsTol = 1e-15);
+
+			% Verify original unchanged
+			testCase.verifyEqual(v1.coords, [6; 9; 12]);
+		end
+
+
 		function testProjectVector(testCase)
 			v = Vector([3; 4; 5], testCase.frames.world);
 
@@ -363,6 +392,40 @@ classdef testVector < matlab.unittest.TestCase
 				vProj45.coords, ...
 				[3.5; 3.5; 0], ...
 				AbsTol = 1e-15);
+		end
+
+
+		function testGetSkew(testCase)
+			% Test skew-symmetric matrix generation
+			v1 = Vector([1; 2; 3], testCase.frames.world);
+			K1 = v1.getSkew();
+			
+			% Verify matrix structure
+			expected1 = [0, -3, 2; 3, 0, -1; -2, 1, 0];
+			testCase.verifyEqual(K1, expected1);
+			
+			% Verify skew-symmetry: K = -K'
+			testCase.verifyEqual(K1, -K1', AbsTol = 1e-15);
+			
+			% Test that cross product equals matrix multiplication
+			v2 = Vector([4; 5; 6], testCase.frames.world);
+			crossResult = cross(v1, v2);
+			matrixResult = K1 * v2.coords;
+			testCase.verifyEqual( ...
+				crossResult.coords, ...
+				matrixResult, ...
+				AbsTol = 1e-15);
+			
+			% Test with unit vectors
+			vX = Vector([1; 0; 0], testCase.frames.world);
+			KX = vX.getSkew();
+			expectedX = [0, 0, 0; 0, 0, -1; 0, 1, 0];
+			testCase.verifyEqual(KX, expectedX);
+			
+			vZ = Vector([0; 0; 1], testCase.frames.world);
+			KZ = vZ.getSkew();
+			expectedZ = [0, -1, 0; 1, 0, 0; 0, 0, 0];
+			testCase.verifyEqual(KZ, expectedZ);
 		end
 
 	end
