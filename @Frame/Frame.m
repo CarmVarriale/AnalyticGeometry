@@ -36,6 +36,7 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 	properties (Dependent)
 
 		triad (3,1) Vector
+		axes (3,1) Line
 
 	end
 
@@ -144,6 +145,14 @@ classdef Frame < TreeNode & matlab.mixin.Heterogeneous & matlab.mixin.Copyable
 		function triad = get.triad(frame)
 			for i = 3:-1:1
 				triad(i) = Vector(frame.orien_.coords(:,i), frame.orien_.ref);
+			end
+		end
+
+
+		% axes
+		function axes = get.axes(frame)
+			for i = 3:-1:1
+				axes(i) = Line(frame.origin_, frame.triad(i));
 			end
 		end
 
