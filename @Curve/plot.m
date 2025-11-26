@@ -13,9 +13,4 @@ function graphicObj = plot(curve, opts, style)
 		coords(1,:), coords(2,:), coords(3,:), ...
 		style{:});
 	axis(opts.ax, "equal");
-	if all(coords(2,:) == 0)
-		view(0, 0);
-	elseif all(coords(1,:) == 0)
-		view(90, 0);
-	end
 end
