@@ -4,7 +4,7 @@ function newFrame = projectNew(frame, name, destID)
 arguments (Input)
 	frame (1,1) Frame
 	name (1,1) string
-	destID (1,1) {mustBeMember(destID, ["1","2","3","12","13","23"])}
+	destID (1,1) {mustBeA(destID, ["Line", "Plane", "string"])}
 end
 arguments (Output)
 	newFrame (1,1) Frame
