@@ -11,6 +11,12 @@ classdef Line < GeomObj
 
 	end
 
+	properties (Dependent, Hidden)
+
+		projector (1,1) Tensor
+
+	end
+
 	methods 
 	
 		%% Constructor
@@ -36,6 +42,11 @@ classdef Line < GeomObj
 			line.anchor = point;
 			line.direc = Vector(direc.coords/direc.magnitude, point.ref);
 		end
+
+
+		%% Property Management
+		function projector = get.projector(line)
+			projector = Projection(line.direc, "para");
 		end
 
 	end

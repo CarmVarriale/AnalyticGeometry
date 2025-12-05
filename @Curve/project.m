@@ -3,7 +3,7 @@ function curve = project(curve, dest)
 % of their frame
 arguments (Input)
 	curve (1,1) Curve
-	dest (1,1) {mustBeMember(dest,["1","2","3","12","13","23"])}
+	dest (1,1) {mustBeA(dest, ["Line", "Plane", "string"])}
 end
 arguments (Output)
 	curve (1,1) Curve

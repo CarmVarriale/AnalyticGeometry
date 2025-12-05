@@ -2,13 +2,12 @@ function vec = project(vec, dest)
 % Project vector onto a line or coordinate axis/plane of its frame
 arguments (Input)
 	vec (1,1) Vector
-	dest {mustBeA(dest, ["Line", "string"])}
+	dest {mustBeA(dest, ["Line", "Plane", "string"])}
 end
-if isa(dest, "Line")
-	% Project: v_proj = (v · u)u
-	vec = dot(vec, dest.direc) * dest.direc;
+if isa(dest, "Line") || isa(dest, "Plane")
+	vec = dest.projector * vec;
 elseif isa(dest, "string")
-	% Project onto coordinate plane or axis
+	% Project onto current reference plane or axis
 	switch dest
 		case "1", vec.coords = [vec.coords(1); 0; 0]; return;
 		case "2", vec.coords = [0; vec.coords(2); 0]; return;
