@@ -62,7 +62,7 @@ classdef Orien < Tensor
 				axis = varargin{1};
 				angle = varargin{2};
 				axis = axis / axis.magnitude;
-				K = axis.getSkew();
+				K = axis.skew;
 				R = eye(3) + sin(angle) * K + (1 - cos(angle)) * (K * K);
 				coords = R;
 				ref = axis.ref;

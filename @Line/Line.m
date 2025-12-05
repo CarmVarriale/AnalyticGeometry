@@ -5,8 +5,8 @@ classdef Line < GeomObj
 	% Can be constructed from two points or from one point and a vector.
 
 	properties
-		
-		anchor (1,1) Point     
+
+		anchor (1,1) Point
 		direc (1,1) Vector
 
 	end
@@ -17,8 +17,8 @@ classdef Line < GeomObj
 
 	end
 
-	methods 
-	
+	methods
+
 		%% Constructor
 		function line = Line(point, geomElem)
 			% Construct a line given two points or a point and a vector
@@ -27,20 +27,13 @@ classdef Line < GeomObj
 				geomElem {mustBeA(geomElem, ["Point", "Vector"])} ...
 					= Vector([1;0;0], World.getWorld())
 			end
-		if isa(geomElem, "Point")
-			direc = geomElem - point;
-			assert(direc.magnitude >= eps, ...
-				"Line:InvalidPoints", ...
-				"The two points are too close to define a line.");
+			if isa(geomElem, "Point")
+				direc = geomElem - point;
+			elseif isa(geomElem, "Vector")
+				direc = geomElem;
+			end
 			line.anchor = point;
-			line.direc = Vector(direc.coords/direc.magnitude, point.ref);
-		elseif isa(geomElem, "Vector")
-			direc = geomElem.resolveIn(point.ref);
-			assert(direc.magnitude >= eps, ...
-				"Line:InvalidVector", ...
-				"The direction vector has zero magnitude.");
-			line.anchor = point;
-			line.direc = Vector(direc.coords/direc.magnitude, point.ref);
+			line.direc = direc.unit.resolveIn(point.ref);
 		end
 
 
@@ -51,7 +44,6 @@ classdef Line < GeomObj
 
 	end
 
-	%% Methods
 	methods (Access = public)
 
 		% Resolution
