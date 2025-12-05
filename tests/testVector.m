@@ -398,7 +398,7 @@ classdef testVector < matlab.unittest.TestCase
 		function testGetSkew(testCase)
 			% Test skew-symmetric matrix generation
 			v1 = Vector([1; 2; 3], testCase.frames.world);
-			K1 = v1.getSkew();
+			K1 = v1.skew;
 			
 			% Verify matrix structure
 			expected1 = [0, -3, 2; 3, 0, -1; -2, 1, 0];
@@ -418,12 +418,12 @@ classdef testVector < matlab.unittest.TestCase
 			
 			% Test with unit vectors
 			vX = Vector([1; 0; 0], testCase.frames.world);
-			KX = vX.getSkew();
+			KX = vX.skew;
 			expectedX = [0, 0, 0; 0, 0, -1; 0, 1, 0];
 			testCase.verifyEqual(KX, expectedX);
 			
 			vZ = Vector([0; 0; 1], testCase.frames.world);
-			KZ = vZ.getSkew();
+			KZ = vZ.skew;
 			expectedZ = [0, -1, 0; 1, 0, 0; 0, 0, 0];
 			testCase.verifyEqual(KZ, expectedZ);
 		end

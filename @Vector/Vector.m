@@ -13,6 +13,8 @@ classdef Vector < GeomElem
 	properties (Dependent, Hidden)
 
 		magnitude (1,1) double {mustBeNonnegative}
+		unit (1,1) Vector
+		skew (3,3) double
 	
 	end
     
@@ -37,6 +39,21 @@ classdef Vector < GeomElem
             mag = norm(vec.coords);
 		end
 
+
+		function unitVec = get.unit(vec)
+			assert(vec.magnitude > eps, ...
+				"Vector:GetUnit:ZeroMagnitude", ...
+				"Cannot compute unit vector of a zero-magnitude vector.");
+			unitVec = Vector(vec.coords / vec.magnitude, vec.ref);
+		end
+
+
+		function skewMat = get.skew(vec)
+			skewMat = [  0       -vec.coords(3)  vec.coords(2);
+						vec.coords(3)   0       -vec.coords(1);
+					   -vec.coords(2)  vec.coords(1)   0      ];
+		end
+
 	end
 
 	%% Methods
@@ -48,8 +65,7 @@ classdef Vector < GeomElem
 
 		% Transformation
 		vec = project(vec, dest)
-		vec = rotate(vec, orien)	
-		matrix = getSkew(vec)	        
+		vec = rotate(vec, orien)	      
 
 		% Operation
 		newVec = uminus(vec)
@@ -59,6 +75,7 @@ classdef Vector < GeomElem
 		newVec = mrdivide(vec1, scalar)
 		scalar = dot(vec1, vec2)
 		newVec = cross(vec1, vec2)
+		tens = outer(vec1, vec2)
 
         % Visualization
 		disp(vec)
